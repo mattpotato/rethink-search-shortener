@@ -8,5 +8,10 @@ query Search($query: String!, $first: Int, $after: Cursor) {
       country
       email
     }
+    totalCount
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
   }
 }

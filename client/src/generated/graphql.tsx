@@ -351,10 +351,14 @@ export type SearchQuery = (
   { __typename?: 'Query' }
   & { search?: Maybe<(
     { __typename?: 'PeopleConnection' }
+    & Pick<PeopleConnection, 'totalCount'>
     & { nodes: Array<Maybe<(
       { __typename?: 'Person' }
       & Pick<Person, 'firstName' | 'lastName' | 'jobTitle' | 'country' | 'email'>
-    )>> }
+    )>>, pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'hasNextPage' | 'endCursor'>
+    ) }
   )> }
 );
 
@@ -369,6 +373,11 @@ export const SearchDocument = gql`
       country
       country
       email
+    }
+    totalCount
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
