@@ -1,8 +1,8 @@
 import React from "react";
-import "./App.css";
 import { ApolloProvider } from "@apollo/client";
 
 import { ApolloClient, InMemoryCache } from "@apollo/client";
+import Search from "./components/Search";
 
 const client = new ApolloClient({
   uri: "http://localhost:5000/graphql",
@@ -12,9 +12,7 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <div>
-        <h2>My first Apollo app 🚀</h2>
-      </div>
+      <Search />
     </ApolloProvider>
   );
 }
