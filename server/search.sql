@@ -16,7 +16,7 @@ CREATE FUNCTION search (query text)
     FROM
         people
     WHERE
-        document_with_idx @@ to_tsquery(query || ':*')
+        document_with_idx @@ plainto_tsquery(query || ':*')
 $$
 LANGUAGE sql
 STABLE;
