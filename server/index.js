@@ -12,16 +12,14 @@ app.get("/s/:shortId", (req, res) => {
   const shortId = req.params.shortId;
   pool.query(
     `select * from url where short_id='${shortId}'`,
-    (error, results) => {
-      if (error) {
-        res.status(404).json({ error: 404 });
-      }
-      const url = results.rows[0];
+    (error, result) => {
+      const url = result.rows[0];
+
       if (url) {
         res.redirect(url.long_url);
-        return;
+      } else {
+        res.sendStatus(404);
       }
-      res.status(404).json({ error: "url does not exist" });
     }
   );
 });
