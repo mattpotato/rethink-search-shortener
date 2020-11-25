@@ -3,6 +3,7 @@ import { ApolloProvider } from "@apollo/client";
 
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import Search from "./components/Search";
+import Shortener from "./components/Shortener";
 
 const client = new ApolloClient({
   uri: "http://localhost:5000/graphql",
@@ -12,6 +13,7 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
+      <Shortener />
       <Search />
     </ApolloProvider>
   );
