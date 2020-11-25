@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "knex": "^0.21.12",
+    "pg": "^8.5.1",
     "postgraphile": "^4.9.2"
   }
 }
