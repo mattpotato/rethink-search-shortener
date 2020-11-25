@@ -1,0 +1,8 @@
+query AllUrls {
+  allUrls(orderBy: CREATED_AT_DESC) {
+    nodes {
+      shortId
+      longUrl
+    }
+  }
+}
