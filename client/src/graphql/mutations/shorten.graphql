@@ -1,0 +1,8 @@
+mutation Shorten($shortId: String!, $longUrl: String!) {
+  shorten(input: { shortId: $shortId, longUrl: $longUrl }) {
+    url {
+      shortId
+      longUrl
+    }
+  }
+}
