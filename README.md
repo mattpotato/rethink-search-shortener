@@ -1,7 +1,7 @@
 # rethink-search-shortener
 
-Rethink Challenge 2 and 3. For this to run, you need to have PostgreSQL and Node installed
-.
+Rethink Challenge 2 and 3. For this to run, you need to have PostgreSQL and Node installed.
+
 ## Setup
 
 1. Install PostgreSQL
