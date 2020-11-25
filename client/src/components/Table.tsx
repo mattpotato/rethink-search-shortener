@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import DataTable from "react-data-table-component";
 import { PeopleConnection } from "../generated/graphql";
+import { StyledButton } from "./StyledButton";
 
 interface TableProps {
   data: PeopleConnection | undefined | null;
@@ -54,12 +55,12 @@ const Table: React.FC<TableProps> = ({ data, loadMore }) => {
         paginationTotalRows={data?.totalCount}
         style={{ marginBottom: 20 }}
       />
-      <button
+      <StyledButton
         onClick={() => loadMore()}
         style={{ display: data?.pageInfo.hasNextPage ? undefined : "none" }}
       >
-        load more
-      </button>
+        Load More
+      </StyledButton>
     </div>
   );
 };
