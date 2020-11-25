@@ -2,9 +2,10 @@ const express = require("express");
 const { postgraphile } = require("postgraphile");
 const Pool = require("pg").Pool;
 const app = express();
+const config = require("./config");
 
 const pool = new Pool({
-  connectionString: "postgres://postgres:postgres@localhost:5432/dbsearch",
+  connectionString: config.PG_CONNECTION_STRING,
 });
 
 app.get("/s/:shortId", (req, res) => {
@@ -27,8 +28,7 @@ app.get("/s/:shortId", (req, res) => {
 
 app.use(
   postgraphile(
-    process.env.DATABASE_URL ||
-      "postgres://postgres:postgres@localhost:5432/dbsearch",
+    process.env.DATABASE_URL || config.PG_CONNECTION_STRING,
     "public",
     {
       watchPg: true,
