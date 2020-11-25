@@ -11,6 +11,8 @@ export type Scalars = {
   Float: number;
   /** A location in a connection that can be used for resuming pagination. */
   Cursor: any;
+  /** A point in time as described by the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) standard. May or may not include a timezone. */
+  Datetime: any;
 };
 
 /** The root query type which gives access points into the data universe. */
@@ -26,8 +28,13 @@ export type Query = Node & {
   allMockData?: Maybe<MockDataConnection>;
   /** Reads and enables pagination through a set of `Person`. */
   allPeople?: Maybe<PeopleConnection>;
+  /** Reads and enables pagination through a set of `Url`. */
+  allUrls?: Maybe<UrlsConnection>;
+  urlByShortId?: Maybe<Url>;
   /** Reads and enables pagination through a set of `Person`. */
   search?: Maybe<PeopleConnection>;
+  /** Reads a single `Url` using its globally unique `ID`. */
+  url?: Maybe<Url>;
 };
 
 
@@ -62,6 +69,24 @@ export type QueryAllPeopleArgs = {
 
 
 /** The root query type which gives access points into the data universe. */
+export type QueryAllUrlsArgs = {
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['Cursor']>;
+  after?: Maybe<Scalars['Cursor']>;
+  orderBy?: Maybe<Array<UrlsOrderBy>>;
+  condition?: Maybe<UrlCondition>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryUrlByShortIdArgs = {
+  shortId: Scalars['String'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
 export type QuerySearchArgs = {
   query?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
@@ -69,6 +94,12 @@ export type QuerySearchArgs = {
   offset?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['Cursor']>;
   after?: Maybe<Scalars['Cursor']>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryUrlArgs = {
+  nodeId: Scalars['ID'];
 };
 
 /** An object with a globally unique `ID`. */
@@ -241,6 +272,61 @@ export type PeopleEdge = {
   node?: Maybe<Person>;
 };
 
+/** Methods to use when ordering `Url`. */
+export enum UrlsOrderBy {
+  Natural = 'NATURAL',
+  ShortIdAsc = 'SHORT_ID_ASC',
+  ShortIdDesc = 'SHORT_ID_DESC',
+  LongUrlAsc = 'LONG_URL_ASC',
+  LongUrlDesc = 'LONG_URL_DESC',
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
+}
+
+/** A condition to be used against `Url` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type UrlCondition = {
+  /** Checks for equality with the object’s `shortId` field. */
+  shortId?: Maybe<Scalars['String']>;
+  /** Checks for equality with the object’s `longUrl` field. */
+  longUrl?: Maybe<Scalars['String']>;
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: Maybe<Scalars['Datetime']>;
+};
+
+
+/** A connection to a list of `Url` values. */
+export type UrlsConnection = {
+  __typename?: 'UrlsConnection';
+  /** A list of `Url` objects. */
+  nodes: Array<Maybe<Url>>;
+  /** A list of edges which contains the `Url` and cursor to aid in pagination. */
+  edges: Array<UrlsEdge>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Url` you could get from the connection. */
+  totalCount: Scalars['Int'];
+};
+
+export type Url = Node & {
+  __typename?: 'Url';
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID'];
+  shortId: Scalars['String'];
+  longUrl: Scalars['String'];
+  createdAt?: Maybe<Scalars['Datetime']>;
+};
+
+/** A `Url` edge in the connection. */
+export type UrlsEdge = {
+  __typename?: 'UrlsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']>;
+  /** The `Url` at the end of the edge. */
+  node?: Maybe<Url>;
+};
+
 /** The root mutation type which contains root level fields which mutate data. */
 export type Mutation = {
   __typename?: 'Mutation';
@@ -248,6 +334,17 @@ export type Mutation = {
   createMockDatum?: Maybe<CreateMockDatumPayload>;
   /** Creates a single `Person`. */
   createPerson?: Maybe<CreatePersonPayload>;
+  /** Creates a single `Url`. */
+  createUrl?: Maybe<CreateUrlPayload>;
+  /** Updates a single `Url` using its globally unique id and a patch. */
+  updateUrl?: Maybe<UpdateUrlPayload>;
+  /** Updates a single `Url` using a unique key and a patch. */
+  updateUrlByShortId?: Maybe<UpdateUrlPayload>;
+  /** Deletes a single `Url` using its globally unique id. */
+  deleteUrl?: Maybe<DeleteUrlPayload>;
+  /** Deletes a single `Url` using a unique key. */
+  deleteUrlByShortId?: Maybe<DeleteUrlPayload>;
+  shorten?: Maybe<ShortenPayload>;
 };
 
 
@@ -260,6 +357,42 @@ export type MutationCreateMockDatumArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreatePersonArgs = {
   input: CreatePersonInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateUrlArgs = {
+  input: CreateUrlInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateUrlArgs = {
+  input: UpdateUrlInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateUrlByShortIdArgs = {
+  input: UpdateUrlByShortIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteUrlArgs = {
+  input: DeleteUrlInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteUrlByShortIdArgs = {
+  input: DeleteUrlByShortIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationShortenArgs = {
+  input: ShortenInput;
 };
 
 /** All input for the create `MockDatum` mutation. */
@@ -340,6 +473,177 @@ export type CreatePersonPayloadPersonEdgeArgs = {
   orderBy?: Maybe<Array<PeopleOrderBy>>;
 };
 
+/** All input for the create `Url` mutation. */
+export type CreateUrlInput = {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The `Url` to be created by this mutation. */
+  url: UrlInput;
+};
+
+/** An input for mutations affecting `Url` */
+export type UrlInput = {
+  shortId: Scalars['String'];
+  longUrl: Scalars['String'];
+  createdAt?: Maybe<Scalars['Datetime']>;
+};
+
+/** The output of our create `Url` mutation. */
+export type CreateUrlPayload = {
+  __typename?: 'CreateUrlPayload';
+  /** The exact same `clientMutationId` that was provided in the mutation input, unchanged and unused. May be used by a client to track mutations. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The `Url` that was created by this mutation. */
+  url?: Maybe<Url>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** An edge for our `Url`. May be used by Relay 1. */
+  urlEdge?: Maybe<UrlsEdge>;
+};
+
+
+/** The output of our create `Url` mutation. */
+export type CreateUrlPayloadUrlEdgeArgs = {
+  orderBy?: Maybe<Array<UrlsOrderBy>>;
+};
+
+/** All input for the `updateUrl` mutation. */
+export type UpdateUrlInput = {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The globally unique `ID` which will identify a single `Url` to be updated. */
+  nodeId: Scalars['ID'];
+  /** An object where the defined keys will be set on the `Url` being updated. */
+  urlPatch: UrlPatch;
+};
+
+/** Represents an update to a `Url`. Fields that are set will be updated. */
+export type UrlPatch = {
+  shortId?: Maybe<Scalars['String']>;
+  longUrl?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Datetime']>;
+};
+
+/** The output of our update `Url` mutation. */
+export type UpdateUrlPayload = {
+  __typename?: 'UpdateUrlPayload';
+  /** The exact same `clientMutationId` that was provided in the mutation input, unchanged and unused. May be used by a client to track mutations. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The `Url` that was updated by this mutation. */
+  url?: Maybe<Url>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** An edge for our `Url`. May be used by Relay 1. */
+  urlEdge?: Maybe<UrlsEdge>;
+};
+
+
+/** The output of our update `Url` mutation. */
+export type UpdateUrlPayloadUrlEdgeArgs = {
+  orderBy?: Maybe<Array<UrlsOrderBy>>;
+};
+
+/** All input for the `updateUrlByShortId` mutation. */
+export type UpdateUrlByShortIdInput = {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** An object where the defined keys will be set on the `Url` being updated. */
+  urlPatch: UrlPatch;
+  shortId: Scalars['String'];
+};
+
+/** All input for the `deleteUrl` mutation. */
+export type DeleteUrlInput = {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The globally unique `ID` which will identify a single `Url` to be deleted. */
+  nodeId: Scalars['ID'];
+};
+
+/** The output of our delete `Url` mutation. */
+export type DeleteUrlPayload = {
+  __typename?: 'DeleteUrlPayload';
+  /** The exact same `clientMutationId` that was provided in the mutation input, unchanged and unused. May be used by a client to track mutations. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The `Url` that was deleted by this mutation. */
+  url?: Maybe<Url>;
+  deletedUrlId?: Maybe<Scalars['ID']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** An edge for our `Url`. May be used by Relay 1. */
+  urlEdge?: Maybe<UrlsEdge>;
+};
+
+
+/** The output of our delete `Url` mutation. */
+export type DeleteUrlPayloadUrlEdgeArgs = {
+  orderBy?: Maybe<Array<UrlsOrderBy>>;
+};
+
+/** All input for the `deleteUrlByShortId` mutation. */
+export type DeleteUrlByShortIdInput = {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  shortId: Scalars['String'];
+};
+
+/** All input for the `shorten` mutation. */
+export type ShortenInput = {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  longUrl?: Maybe<Scalars['String']>;
+  shortId?: Maybe<Scalars['String']>;
+};
+
+/** The output of our `shorten` mutation. */
+export type ShortenPayload = {
+  __typename?: 'ShortenPayload';
+  /** The exact same `clientMutationId` that was provided in the mutation input, unchanged and unused. May be used by a client to track mutations. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  url?: Maybe<Url>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** An edge for our `Url`. May be used by Relay 1. */
+  urlEdge?: Maybe<UrlsEdge>;
+};
+
+
+/** The output of our `shorten` mutation. */
+export type ShortenPayloadUrlEdgeArgs = {
+  orderBy?: Maybe<Array<UrlsOrderBy>>;
+};
+
+export type ShortenMutationVariables = Exact<{
+  shortId: Scalars['String'];
+  longUrl: Scalars['String'];
+}>;
+
+
+export type ShortenMutation = (
+  { __typename?: 'Mutation' }
+  & { shorten?: Maybe<(
+    { __typename?: 'ShortenPayload' }
+    & { url?: Maybe<(
+      { __typename?: 'Url' }
+      & Pick<Url, 'shortId' | 'longUrl'>
+    )> }
+  )> }
+);
+
+export type AllUrlsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllUrlsQuery = (
+  { __typename?: 'Query' }
+  & { allUrls?: Maybe<(
+    { __typename?: 'UrlsConnection' }
+    & { nodes: Array<Maybe<(
+      { __typename?: 'Url' }
+      & Pick<Url, 'shortId' | 'longUrl'>
+    )>> }
+  )> }
+);
+
 export type SearchQueryVariables = Exact<{
   query: Scalars['String'];
   first?: Maybe<Scalars['Int']>;
@@ -363,6 +667,77 @@ export type SearchQuery = (
 );
 
 
+export const ShortenDocument = gql`
+    mutation Shorten($shortId: String!, $longUrl: String!) {
+  shorten(input: {shortId: $shortId, longUrl: $longUrl}) {
+    url {
+      shortId
+      longUrl
+    }
+  }
+}
+    `;
+export type ShortenMutationFn = Apollo.MutationFunction<ShortenMutation, ShortenMutationVariables>;
+
+/**
+ * __useShortenMutation__
+ *
+ * To run a mutation, you first call `useShortenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useShortenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [shortenMutation, { data, loading, error }] = useShortenMutation({
+ *   variables: {
+ *      shortId: // value for 'shortId'
+ *      longUrl: // value for 'longUrl'
+ *   },
+ * });
+ */
+export function useShortenMutation(baseOptions?: Apollo.MutationHookOptions<ShortenMutation, ShortenMutationVariables>) {
+        return Apollo.useMutation<ShortenMutation, ShortenMutationVariables>(ShortenDocument, baseOptions);
+      }
+export type ShortenMutationHookResult = ReturnType<typeof useShortenMutation>;
+export type ShortenMutationResult = Apollo.MutationResult<ShortenMutation>;
+export type ShortenMutationOptions = Apollo.BaseMutationOptions<ShortenMutation, ShortenMutationVariables>;
+export const AllUrlsDocument = gql`
+    query AllUrls {
+  allUrls(orderBy: CREATED_AT_DESC) {
+    nodes {
+      shortId
+      longUrl
+    }
+  }
+}
+    `;
+
+/**
+ * __useAllUrlsQuery__
+ *
+ * To run a query within a React component, call `useAllUrlsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllUrlsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllUrlsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAllUrlsQuery(baseOptions?: Apollo.QueryHookOptions<AllUrlsQuery, AllUrlsQueryVariables>) {
+        return Apollo.useQuery<AllUrlsQuery, AllUrlsQueryVariables>(AllUrlsDocument, baseOptions);
+      }
+export function useAllUrlsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllUrlsQuery, AllUrlsQueryVariables>) {
+          return Apollo.useLazyQuery<AllUrlsQuery, AllUrlsQueryVariables>(AllUrlsDocument, baseOptions);
+        }
+export type AllUrlsQueryHookResult = ReturnType<typeof useAllUrlsQuery>;
+export type AllUrlsLazyQueryHookResult = ReturnType<typeof useAllUrlsLazyQuery>;
+export type AllUrlsQueryResult = Apollo.QueryResult<AllUrlsQuery, AllUrlsQueryVariables>;
 export const SearchDocument = gql`
     query Search($query: String!, $first: Int, $after: Cursor) {
   search(query: $query, first: $first, after: $after) {
