@@ -6,6 +6,7 @@ Rethink Challenge 2 and 3. For this to run, you need to have PostgreSQL and Node
 
 1. Install PostgreSQL
 2. In the terminal, create a new postgres database `createdb dbsearch`
+2. Edit server/config.js if needed. The username and password is postgres by default. 
 3. Go to server directory then install server packages with `npm install` or `yarn`
 4. Run migrations ```npx knex migrate:latest```
 5. Populate table ```npx knex seed:run```
