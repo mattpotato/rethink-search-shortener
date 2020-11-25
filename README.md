@@ -19,7 +19,7 @@ Rethink Challenge 2 and 3. For this to run, you need to have PostgreSQL and Node
 ### Scope
 
 - Search using Full Text Search in PostgreSQL (with the help of PostGraphile and Apollo Client for GraphQL queries/mutations)
-- Render results in a table and update search results when character changes
+- Render results in a table and update search results when search query changes
 - Pagination
 
 ## Shortener
