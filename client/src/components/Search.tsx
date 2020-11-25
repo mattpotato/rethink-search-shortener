@@ -1,10 +1,12 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   PeopleConnection,
   SearchQuery,
   useSearchQuery,
 } from "../generated/graphql";
+import { StyledInput } from "./StyledInput";
 import Table from "./Table";
+import { Wrapper } from "./Wrapper";
 
 const Search: React.FC = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -45,22 +47,16 @@ const Search: React.FC = () => {
   };
   return (
     <div>
-      <h1 style={{ textAlign: "center" }}>Search</h1>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <input
+      <Wrapper>
+        <h1>Search</h1>
+        <StyledInput
           type="text"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           placeholder="Search by Name, Job Title, or Country..."
-          style={{
-            width: 500,
-            borderRadius: 5,
-            padding: "5px",
-            fontSize: "14pt",
-          }}
         />
-      </div>
-      {data?.search ? <div> Got {data.search.totalCount} results</div> : null}
+        {data?.search ? <div> Got {data.search.totalCount} results</div> : null}
+      </Wrapper>
       <Table
         data={data?.search as PeopleConnection}
         loadMore={handleLoadMore}
